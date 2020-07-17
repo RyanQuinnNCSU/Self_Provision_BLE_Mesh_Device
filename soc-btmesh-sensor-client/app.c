@@ -105,6 +105,8 @@ void gecko_bgapi_classes_init(void)
   gecko_bgapi_class_mesh_proxy_init();
   gecko_bgapi_class_mesh_proxy_server_init();
   gecko_bgapi_class_mesh_sensor_client_init();
+  gecko_bgapi_class_mesh_sensor_server_init();
+  gecko_bgapi_class_mesh_sensor_setup_server_init();
 }
 
 /*******************************************************************************

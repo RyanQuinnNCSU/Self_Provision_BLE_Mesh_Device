@@ -10,7 +10,7 @@
       {
         "Name": "Primary Element",
         "Loc": "0x0000",
-        "NumS": "3",
+        "NumS": "4",
         "NumV": "0",
         "SIG Models": [
           "0x0000",
@@ -18,7 +18,9 @@
           "0x0002",
           "Health Server",
           "0x1102",
-          "Sensor Client"]
+          "Sensor Client",
+          "0x1100",
+          "Sensor Server"]
         ,
         "Vendor Models": [
           ]
@@ -27,7 +29,7 @@
   },
   "Memory configuration": {
     "MAX_ELEMENTS": "1",
-    "MAX_MODELS": "3",
+    "MAX_MODELS": "4",
     "MAX_APP_BINDS": "4",
     "MAX_SUBSCRIPTIONS": "4",
     "MAX_NETKEYS": "4",
