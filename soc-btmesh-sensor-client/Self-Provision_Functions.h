@@ -9,5 +9,5 @@
 #define SELF_PROVISION_FUNCTIONS_H_
 
 
-
+void Self_Provision_Device(void);
 #endif /* SELF_PROVISION_FUNCTIONS_H_ */

@@ -36,6 +36,10 @@
 /* Coex header */
 #include "coexistence-ble.h"
 
+//My Header Files
+#include "TID.h"
+#include "Self-Provision_Functions.h"
+
 #ifdef ENABLE_LOGGING
 #define log(...) printf(__VA_ARGS__)
 #else
@@ -61,11 +65,7 @@
 /*******************************************************************************
  * Timer handles defines.
  ******************************************************************************/
-#define TIMER_ID_RESTART            78
-#define TIMER_ID_FACTORY_RESET      77
-#define TIMER_ID_PROVISIONING       66
-#define TIMER_ID_SENSOR_DATA        65
-#define TIMER_ID_SENSOR_DESCRIPTOR  64
+
 
 #define TIMER_CLK_FREQ ((uint32_t)32768) ///< Timer Frequency used
 /// Convert miliseconds to timer ticks
@@ -107,6 +107,8 @@ void gecko_bgapi_classes_init(void)
   gecko_bgapi_class_mesh_sensor_client_init();
   gecko_bgapi_class_mesh_sensor_server_init();
   gecko_bgapi_class_mesh_sensor_setup_server_init();
+  gecko_bgapi_class_mesh_generic_client_init();
+  gecko_bgapi_class_mesh_generic_server_init();
 }
 
 /*******************************************************************************
@@ -264,11 +266,12 @@ static void handle_node_initialized_event(
                                       1);
     DI_Print("provisioned", DI_ROW_STATUS);
   } else {
-    log("node is unprovisioned\r\n");
+    /*log("node is unprovisioned\r\n");
     DI_Print("unprovisioned", DI_ROW_STATUS);
     log("starting unprovisioned beaconing...\r\n");
     // Enable ADV and GATT provisioning bearer
-    gecko_cmd_mesh_node_start_unprov_beaconing(PB_ADV | PB_GATT);
+    gecko_cmd_mesh_node_start_unprov_beaconing(PB_ADV | PB_GATT);*/
+	Self_Provision_Device();
   }
 }
 

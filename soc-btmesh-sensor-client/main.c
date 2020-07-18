@@ -30,6 +30,8 @@
 
 /* Application code */
 #include "app.h"
+//for unicast
+#include "em_system.h"
 
 /***************************************************************************//**
  * @addtogroup Application
@@ -40,6 +42,11 @@
  * @addtogroup app
  * @{
  ******************************************************************************/
+
+//Globals
+uint16_t Unicast;
+
+
 
 /// Maximum number of simultaneous Bluetooth connections
 #define MAX_CONNECTIONS 2
@@ -100,6 +107,8 @@ int main(void)
   // Initialize application
   initApp();
   initVcomEnable();
+
+  Unicast = (uint16_t)(SYSTEM_GetUnique() & 0x7FFF);
 
   // Minimize advertisement latency by allowing the advertiser to always
   // interrupt the scanner.

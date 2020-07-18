@@ -207,7 +207,7 @@
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 	</storageModule>
-	<storageModule generalProj.esf.protocolIds="com.silabs.sdk.stack.btmesh:1.7.0._620725461.com.silabs.stack.ble:2.13.6.0_-1741447365" generalProj.esf.protocolNames="btmesh" moduleId="com.silabs.ss.framework.ide.project.core.cpp" project.generation="3" projectCommon.boardIds="brd4161a:0.0.0.A02" projectCommon.importModeId="LINK_LIBRARIES" projectCommon.partId="mcu.arm.efr32.mg12.efr32mg12p432f1024gl125" projectCommon.sdkId="com.silabs.sdk.stack.btmesh:1.7.0._620725461"/>
+	<storageModule generalProj.esf.protocolIds="com.silabs.sdk.stack.btmesh:1.7.0._620725461.com.silabs.stack.ble:2.13.6.0_-1741447365" generalProj.esf.protocolNames="btmesh" moduleId="com.silabs.ss.framework.ide.project.core.cpp" project.generation="7" projectCommon.boardIds="brd4161a:0.0.0.A02" projectCommon.importModeId="LINK_LIBRARIES" projectCommon.partId="mcu.arm.efr32.mg12.efr32mg12p432f1024gl125" projectCommon.sdkId="com.silabs.sdk.stack.btmesh:1.7.0._620725461"/>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="soc-btmesh-sensor-client.com.silabs.ss.framework.ide.project.core.cdt.cdtMbsProjectType.1950965707" name="SLS CDT Project" projectType="com.silabs.ss.framework.ide.project.core.cdt.cdtMbsProjectType"/>
 	</storageModule>

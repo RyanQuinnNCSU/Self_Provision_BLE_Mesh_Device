@@ -20,6 +20,8 @@
 
 #include <gecko_configuration.h>
 
+extern uint16_t Unicast;
+
 /***************************************************************************//**
  * @defgroup app Application Code
  * @brief Sample Application Implementation

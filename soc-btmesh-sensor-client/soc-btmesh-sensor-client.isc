@@ -118,7 +118,7 @@ appPlugin: slot-manager=false
       \{
         "Name": "Primary Element",
         "Loc": "0x0000",
-        "NumS": "4",
+        "NumS": "6",
         "NumV": "0",
         "SIG Models": [
           "0x0000",
@@ -128,7 +128,11 @@ appPlugin: slot-manager=false
           "0x1102",
           "Sensor Client",
           "0x1100",
-          "Sensor Server"]
+          "Sensor Server",
+          "0x1002",
+          "Generic Level Server",
+          "0x1003",
+          "Generic Level Client"]
         ,
         "Vendor Models": [
           ]
@@ -136,7 +140,7 @@ appPlugin: slot-manager=false
   \},
   "Memory configuration": \{
     "MAX_ELEMENTS": "1",
-    "MAX_MODELS": "4",
+    "MAX_MODELS": "6",
     "MAX_APP_BINDS": "4",
     "MAX_SUBSCRIPTIONS": "4",
     "MAX_NETKEYS": "4",
