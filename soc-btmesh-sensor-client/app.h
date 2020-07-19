@@ -36,10 +36,13 @@ extern uint16_t Unicast;
 #define ELEM_0 0x0000
 #define APP_KEY_INDEX_0 0x0000
 #define TRANS 0
-#define FLAGS 0
+#define CLIENT_FLAGS 0
 #define MESH_GENERIC_CLIENT_request_level 2
-#define DATA_LENGHT 2
+#define DATA_LENGHT_CLIENT 2
+#define DATA_LENGHT_SERVER 4
 #define DELAY 0
+#define SERVER_FLAGS 0xFFFFFFFF
+
 
 /***************************************************************************//**
  * @defgroup app Application Code

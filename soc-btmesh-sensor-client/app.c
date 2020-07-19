@@ -267,9 +267,9 @@ static void handle_node_initialized_event(
 
     gecko_cmd_mesh_sensor_client_init();
     enable_button_interrupts();
-    gecko_cmd_hardware_set_soft_timer(TIMER_MS_2_TICKS(100),
+    /*gecko_cmd_hardware_set_soft_timer(TIMER_MS_2_TICKS(100),
                                       TIMER_ID_SENSOR_DESCRIPTOR,
-                                      1);
+                                      1);*/
     //models to send messages
     uint16_t result;
     result = gecko_cmd_mesh_generic_client_init()->result;
@@ -446,7 +446,7 @@ void handle_timer_event(uint8_t handle)
     	printf("Sending Generic Client Message. \r\n");
     	uint16_t pub_res;
     	uint8_t byte_array[2] = {0xAA,0xBB};
-    	pub_res = gecko_cmd_mesh_generic_client_publish((uint16)GENERIC_LEVEL_CLIENT, (uint16)ELEM_0, (uint8)Transaction_id, (uint32)TRANS, (uint16)DELAY, (uint16)0, (uint8)MESH_GENERIC_CLIENT_request_level, (uint8)DATA_LENGHT, byte_array)->result;
+    	pub_res = gecko_cmd_mesh_generic_client_publish((uint16)GENERIC_LEVEL_CLIENT, (uint16)ELEM_0, (uint8)Transaction_id, (uint32)TRANS, (uint16)DELAY, (uint16)CLIENT_FLAGS, (uint8)MESH_GENERIC_CLIENT_request_level, (uint8)DATA_LENGHT_CLIENT, byte_array)->result;
     	printf("Pub Result = %x \n", pub_res);
     	if(Transaction_id < 255){
     	    						Transaction_id++;
@@ -549,7 +549,15 @@ static void handle_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *pEvt)
       handle_external_signal_event(pEvt->data.evt_system_external_signal.extsignals);
       break;
     case gecko_evt_mesh_generic_server_client_request_id:
-
+    	printf("Request From Client Received! \r\n");
+    	struct gecko_msg_mesh_generic_server_client_request_evt_t *client_req =(struct gecko_msg_mesh_generic_server_client_request_evt_t *) &(pEvt->data);
+    	uint16_t client_addr = client_req->client_address;
+    	printf("Client Node's Address: %x \r\n", client_addr);
+    	printf("Sending Server Response. \r\n");
+    	uint16_t pub_res;
+    	uint8_t byte_array[4] = {0xAF,0xBF,0xCF,0xDF};
+    	pub_res = gecko_cmd_mesh_generic_server_response((uint16)GENERIC_LEVEL_SERVER, (uint16)ELEM_0, (uint16)SERVER_PUB_ADD, (uint16)APP_KEY_INDEX_0, (uint16)DELAY, (uint16)SERVER_FLAGS, (uint8)MESH_GENERIC_CLIENT_request_level, (uint8)DATA_LENGHT_SERVER, byte_array)->result;
+    	printf("Pub Result = %x \n", pub_res);
     	break;
     case gecko_evt_mesh_generic_server_state_changed_id:
     	break;
