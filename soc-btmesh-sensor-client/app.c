@@ -39,6 +39,8 @@
 //My Header Files
 #include "TID.h"
 #include "Self-Provision_Functions.h"
+#include "app.h"
+
 
 #ifdef ENABLE_LOGGING
 #define log(...) printf(__VA_ARGS__)
@@ -81,6 +83,10 @@ static uint8_t num_connections = 0;
 static uint8_t conn_handle = 0xFF;
 /// Flag for indicating that initialization was performed
 static uint8_t init_done = 0;
+
+
+// My Globals:
+uint8_t Transaction_id = 0;
 
 /*******************************************************************************
  * Function prototypes.
@@ -264,6 +270,13 @@ static void handle_node_initialized_event(
     gecko_cmd_hardware_set_soft_timer(TIMER_MS_2_TICKS(100),
                                       TIMER_ID_SENSOR_DESCRIPTOR,
                                       1);
+    //models to send messages
+    uint16_t result;
+    result = gecko_cmd_mesh_generic_client_init()->result;
+    printf("mesh_generic_client_init %x\r\n", result);
+    result = gecko_cmd_mesh_generic_server_init()->result;
+    printf("mesh_generic_server_init %x\r\n", result);
+	gecko_cmd_hardware_set_soft_timer(10*ONE_SECOND,TIMDER_ID_SEND_GENERIC_CLIENT_MESSAGE,0);
     DI_Print("provisioned", DI_ROW_STATUS);
   } else {
     /*log("node is unprovisioned\r\n");
@@ -429,7 +442,19 @@ void handle_timer_event(uint8_t handle)
     case TIMER_ID_SENSOR_DATA:
       sensor_client_publish_get_request();
       break;
-
+    case TIMDER_ID_SEND_GENERIC_CLIENT_MESSAGE:
+    	printf("Sending Generic Client Message. \r\n");
+    	uint16_t pub_res;
+    	uint8_t byte_array[2] = {0xAA,0xBB};
+    	pub_res = gecko_cmd_mesh_generic_client_publish((uint16)GENERIC_LEVEL_CLIENT, (uint16)ELEM_0, (uint8)Transaction_id, (uint32)TRANS, (uint16)DELAY, (uint16)0, (uint8)MESH_GENERIC_CLIENT_request_level, (uint8)DATA_LENGHT, byte_array)->result;
+    	printf("Pub Result = %x \n", pub_res);
+    	if(Transaction_id < 255){
+    	    						Transaction_id++;
+    	    					}
+    	    					else{
+    	    						Transaction_id = 0;
+    	    					}
+          break;
     default:
       break;
   }
@@ -523,7 +548,23 @@ static void handle_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *pEvt)
     case gecko_evt_system_external_signal_id:
       handle_external_signal_event(pEvt->data.evt_system_external_signal.extsignals);
       break;
+    case gecko_evt_mesh_generic_server_client_request_id:
 
+    	break;
+    case gecko_evt_mesh_generic_server_state_changed_id:
+    	break;
+    case gecko_evt_mesh_generic_client_server_status_id:
+    	printf("Server Response Received! \r\n");
+    	struct gecko_msg_mesh_generic_client_server_status_evt_t *server_resp =(struct gecko_msg_mesh_generic_client_server_status_evt_t *) &(pEvt->data);
+    	uint16_t server_addr = server_resp->server_address;
+    	printf("Server Node's Address: %x \r\n", server_addr);
+    	//read message data
+    	printf("Server Data Bytes: ");
+    	for( int di; di < 4; di++){
+    		printf("%x");
+    	}
+    	printf("\r\n\n");
+    	break;
     default:
       //log("unhandled evt: %8.8x class %2.2x method %2.2x\r\n", evt_id, (evt_id >> 16) & 0xFF, (evt_id >> 24) & 0xFF);
       break;

@@ -8,24 +8,10 @@
 #include "retargetserialhalconfig.h"
 #include "TID.h"
 
-/* Area 1 Keys*/
+/* My Keys*/
 aes_key_128 NetKey = {{0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}};
 aes_key_128 AppKey = {{0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02}};
 aes_key_128 DevKey = {{0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03}};
-
-
-//Model IDs 
-
-#define GENERIC_LEVEL_SERVER 0x1002
-#define GENERIC_LEVEL_CLIENT 0x1003
-
-//Group Addresses for models
-
-#define CLIENT_PUB_ADD 0xC005
-#define CLIENT_SUB_ADD 0xC010
-#define SERVER_PUB_ADD 0xC010
-#define SERVER_SUB_ADD 0xC005
-
 
 
 void Self_Provision_Device(void)
@@ -40,7 +26,7 @@ void Self_Provision_Device(void)
 	result = gecko_cmd_mesh_test_add_local_key(1, AppKey,0,0)->result;
 	printf("gecko_cmd_mesh_test_add_local_key %x\n\r", result);
 
-	gecko_cmd_hardware_set_soft_timer(2 * 32768, TIMER_ID_RESTART, 1); //Restart device to ensure changes are implimented.
+	gecko_cmd_hardware_set_soft_timer(2 * ONE_SECOND, TIMER_ID_RESTART, 1); //Restart device to ensure changes are implimented.
 	
 	// Bind Models
 	

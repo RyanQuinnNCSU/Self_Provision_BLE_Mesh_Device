@@ -22,6 +22,25 @@
 
 extern uint16_t Unicast;
 
+//Model IDs
+#define GENERIC_LEVEL_SERVER 0x1002
+#define GENERIC_LEVEL_CLIENT 0x1003
+
+//Group Addresses for models
+#define CLIENT_PUB_ADD 0xC005
+#define CLIENT_SUB_ADD 0xC010
+#define SERVER_PUB_ADD 0xC010
+#define SERVER_SUB_ADD 0xC005
+
+//Message Info
+#define ELEM_0 0x0000
+#define APP_KEY_INDEX_0 0x0000
+#define TRANS 0
+#define FLAGS 0
+#define MESH_GENERIC_CLIENT_request_level 2
+#define DATA_LENGHT 2
+#define DELAY 0
+
 /***************************************************************************//**
  * @defgroup app Application Code
  * @brief Sample Application Implementation
