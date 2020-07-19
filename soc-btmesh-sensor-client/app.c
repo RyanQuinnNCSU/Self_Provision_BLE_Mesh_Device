@@ -115,6 +115,7 @@ void gecko_bgapi_classes_init(void)
   gecko_bgapi_class_mesh_sensor_setup_server_init();
   gecko_bgapi_class_mesh_generic_client_init();
   gecko_bgapi_class_mesh_generic_server_init();
+  gecko_bgapi_class_mesh_test_init();
 }
 
 /*******************************************************************************
@@ -552,12 +553,14 @@ static void handle_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *pEvt)
     	printf("Request From Client Received! \r\n");
     	struct gecko_msg_mesh_generic_server_client_request_evt_t *client_req =(struct gecko_msg_mesh_generic_server_client_request_evt_t *) &(pEvt->data);
     	uint16_t client_addr = client_req->client_address;
-    	printf("Client Node's Address: %x \r\n", client_addr);
-    	printf("Sending Server Response. \r\n");
-    	uint16_t pub_res;
-    	uint8_t byte_array[4] = {0xAF,0xBF,0xCF,0xDF};
-    	pub_res = gecko_cmd_mesh_generic_server_response((uint16)GENERIC_LEVEL_SERVER, (uint16)ELEM_0, (uint16)SERVER_PUB_ADD, (uint16)APP_KEY_INDEX_0, (uint16)DELAY, (uint16)SERVER_FLAGS, (uint8)MESH_GENERIC_CLIENT_request_level, (uint8)DATA_LENGHT_SERVER, byte_array)->result;
-    	printf("Pub Result = %x \n", pub_res);
+    	if( client_addr != Unicast){
+			printf("Client Node's Address: %x \r\n", client_addr);
+			printf("Sending Server Response. \r\n");
+			uint16_t pub_res;
+			uint8_t byte_array[4] = {0xAF,0xBF,0xCF,0xDF};
+			pub_res = gecko_cmd_mesh_generic_server_response((uint16)GENERIC_LEVEL_SERVER, (uint16)ELEM_0, (uint16)SERVER_PUB_ADD, (uint16)APP_KEY_INDEX_0, (uint16)DELAY, (uint16)SERVER_FLAGS, (uint8)MESH_GENERIC_CLIENT_request_level, (uint8)DATA_LENGHT_SERVER, byte_array)->result;
+			printf("Pub Result = %x \r\n", pub_res);
+    	}
     	break;
     case gecko_evt_mesh_generic_server_state_changed_id:
     	break;
@@ -568,8 +571,8 @@ static void handle_gecko_event(uint32_t evt_id, struct gecko_cmd_packet *pEvt)
     	printf("Server Node's Address: %x \r\n", server_addr);
     	//read message data
     	printf("Server Data Bytes: ");
-    	for( int di; di < 4; di++){
-    		printf("%x");
+    	for( int di = 0; di < 4; di++){
+    		printf("%x", server_resp->parameters.data[di]);
     	}
     	printf("\r\n\n");
     	break;
