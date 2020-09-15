@@ -45,7 +45,7 @@
 
 //Globals
 uint16_t Unicast;
-
+char unicast_array[4];
 
 
 /// Maximum number of simultaneous Bluetooth connections
@@ -64,7 +64,6 @@ uint8_t bluetooth_stack_heap[DEFAULT_BLUETOOTH_HEAP(MAX_CONNECTIONS) + BTMESH_HE
 /// * N advertisement sets for Mesh GATT service advertisements
 /// (one for each network key, handle numbers 4 .. N+3)
 ///
-#define MAX_ADVERTISERS (4 + MESH_CFG_MAX_NETKEYS)
 
 /// Priorities for bluetooth link layer operations
 static gecko_bluetooth_ll_priorities linklayer_priorities = GECKO_BLUETOOTH_PRIORITIES_DEFAULT;
@@ -109,7 +108,7 @@ int main(void)
   initVcomEnable();
 
   Unicast = (uint16_t)(SYSTEM_GetUnique() & 0x7FFF);
-
+  sprintf(unicast_array,"%x",Unicast);
   // Minimize advertisement latency by allowing the advertiser to always
   // interrupt the scanner.
   linklayer_priorities.scan_max = linklayer_priorities.adv_min + 1;
